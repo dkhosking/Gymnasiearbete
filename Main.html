@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Projectile Mosadation Simulation</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+
+  <style>
+    canvas {
+      transform: scale(1, -1);
+      border: 1px black solid;
+    }
+  </style>
+</head>
+<body>
+  <button type="button" id="startButton">Start Simulation</button>
+  <button type="button" id="pauseBtn">Pause</button>
+  <button type="button" id="homeBtn">hem</button>
+  <button type="number" placeholder="halfspeed" id="halfSpeed">halfSpeed</button>
+ 
+  <input type="checkbox" id="hCheck" checked > Hastighetsvektorer</input>
+  <input type="checkbox" id="aCheck"> Accelerationsvektorer</input>
+
+
+  <p id="hpText"></p>
+  <p id="vpText"></p>
+
+  <p id="cordinates"></p>
+  <p id="g"></p>
+  <input type="number" list="gravity" id="gravInput"  placeholder=9.82 />
+  <datalist id="gravity" >
+    <option value=9.82 >Jorden 9.82ms^2</option>
+    <option value=1.62>Månen</option>
+    <option value="274">Solen</option>
+  </datalist>
+  
+  <p id="Ymax"></p>
+  <p id="time"></p>
+  <canvas id="canvas" width="800" height="800"></canvas>
+  <input type="number" placeholder="Angle" id="angleInput"></input>
+  <input type="number" placeholder="Velocity" id="VoInput"></input>
+
+
+
+
+  <script type="module" src="./scripts/draw.js"></script>
+  <script type="module" src="./scripts/script.js"></script>
+  
+</body>
+</html>
