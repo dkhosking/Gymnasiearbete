@@ -32,19 +32,22 @@ function drawAcceleration(projectile, cords,k,a, color, txt) {
   let x = projectile.cVx
 
   k = k/5
+
+  const Xline = x*k
+  const Yline = y*k
   // Draw the arrows.
   ctx.translate(cords.x, cords.y);
   ctx.fillStyle = "red";
   ctx.beginPath();
   ctx.moveTo(0, 0);
-  ctx.lineTo(x*k, 0);
+  ctx.lineTo(Xline, 0);
 
   ctx.moveTo(0, 0);
-  ctx.lineTo(0, ((y*k)))
+  ctx.lineTo(0, ((Yline)))
 
-  drawText(truncate(y)+ txt, -50, -30, k) 
+  drawText(truncate(y)+ txt, -50, Yline, k) 
 
-  drawText(truncate(x)+ txt, 100, 0, k) 
+  drawText(truncate(x)+ txt,Xline, 0, k) 
 
   ctx.translate(-(cords.x), -(cords.y));
 
