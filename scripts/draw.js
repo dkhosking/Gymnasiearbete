@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-import {g, canvasWidth, canvasHeight, dec} from "./constants.js"
+import {g, canvasWidth, canvasHeight, truncate} from "./constants.js"
 
 
 
@@ -25,21 +25,26 @@ function drawText(text, x, y, k) {
   ctx.restore()
 }
 
-function drawAcceleration(projectile, cords,k,a, color) {
+function drawAcceleration(projectile, cords,k,a, color, txt) {
   ctx.strokeStyle = color
-  let les = (g*cords.t)*a
+
+  let y = projectile.cVy
+  let x = projectile.cVx
+
   k = k/5
   // Draw the arrows.
   ctx.translate(cords.x, cords.y);
   ctx.fillStyle = "red";
   ctx.beginPath();
   ctx.moveTo(0, 0);
-  ctx.lineTo(projectile.vx*k, 0);
+  ctx.lineTo(x*k, 0);
 
   ctx.moveTo(0, 0);
-  ctx.lineTo(0, (projectile.vy -les*k))
+  ctx.lineTo(0, ((y*k)))
 
-  drawText((projectile.vy-les)+ " m/s", -10, 0, k) 
+  drawText(truncate(y)+ txt, -50, -30, k) 
+
+  drawText(truncate(x)+ txt, 100, 0, k) 
 
   ctx.translate(-(cords.x), -(cords.y));
 

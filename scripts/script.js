@@ -1,6 +1,6 @@
 import { drawProjectile, drawAcceleration, drawArc, drawText} from "./draw.js";
 import { projectileMaker } from "./projectileMaker.js";
-import {getElementById, g, ctx, startButton, resetButton, pauseButton, homeButton, halfSpeed,canvasWidth,canvasHeight, dec, setG} from "./constants.js"
+import {getElementById, g, ctx, startButton, pauseButton, homeButton, halfSpeed,canvasWidth,canvasHeight, dec, setG, truncate} from "./constants.js"
 
  
 
@@ -102,7 +102,12 @@ function update() {
     cords.t += (0.01)*timestep; // Time step in second
   }
 
+
+
   const vp = (projectile.vy - (g* cords.t))
+  projectile.cVy = (projectile.vy - (g* cords.t))
+  projectile.cVx = projectile.vx
+
   let ms = "m/s"
 
   
@@ -113,13 +118,13 @@ function update() {
   cords.y = (projectile.vy *  cords.t - 0.5 * g * Math.pow(cords.t, 2))*k
 
 
-  getElementById.innerHTML = "Ymax " + projectile.yMax.toFixed(dec)
+  getElementById.innerHTML = "Ymax " +  truncate(projectile.yMax)
 
-  getElementById("hpText").innerHTML = "Vx: " + projectile.vx.toFixed(dec) + ms;
-  getElementById("vpText").innerHTML = "Vy: " + vp.toFixed(dec) + ms;
-  getElementById("time").innerHTML ="Tid: " + cords.t.toFixed(dec) +"s";
+  getElementById("hpText").innerHTML = "Vx: " + truncate(projectile.vx) + ms;
+  getElementById("vpText").innerHTML = "Vy: " + truncate(projectile.cVy) + ms;
+  getElementById("time").innerHTML ="Tid: " + truncate(cords.t) +"s";
 
-  getElementById("cordinates").innerHTML =`(X:${(cords.x/k).toFixed(dec)} Y: ${(cords.y/k).toFixed(dec)}m)`
+  getElementById("cordinates").innerHTML =`(X:${ truncate((cords.x/k))} Y: ${truncate((cords.y/k))}m)`
 
   // add distance
 
@@ -142,18 +147,19 @@ function update() {
   
 
   drawArc(projectile, k)
-  let text = function (txt, value) {return txt+ " " + value.toFixed(dec) + " m"}
+  let text = function (txt, value) {return txt+ " " + truncate(value) + " m"}
   let YmaxText = text("Ymax:", projectile.yMax )
   let xMaxText = text("Xmax:", projectile.xMax() )
   drawText(xMaxText, (projectile.xMax()/2)*k, 0, k)
 
   drawText(YmaxText, 65, projectile.yMax*k, k)
 
-let gAxis = new projectileMaker(-g, Math.PI/2)
+let gAxis = new projectileMaker(0, 0)
+gAxis.cVy = -g
 
   
-  if (getElementById("aCheck").checked) { drawAcceleration(gAxis, cords,k, 0, "blue")}
-  if (getElementById("hCheck").checked) {drawAcceleration(projectile, cords,k,1, "red")}
+  if (getElementById("aCheck").checked) { drawAcceleration(gAxis, cords,k, 0, "blue", "m/s^2")}
+  if (getElementById("hCheck").checked) {drawAcceleration(projectile, cords,k,1, "red", "m/s")}
 
 
 

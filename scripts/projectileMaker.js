@@ -19,6 +19,9 @@ function projectileMaker(Vo, angle) {
 
       return xHome
     }
+
+    this.cVy = 0
+    this.cVx = 0
   }
 
 export {projectileMaker}
