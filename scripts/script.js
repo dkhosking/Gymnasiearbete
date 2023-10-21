@@ -159,7 +159,7 @@ gAxis.cVy = -g
 
   
   if (getElementById("aCheck").checked) { drawAcceleration(gAxis, cords,k, 0, "blue", "m/s^2")}
-  if (getElementById("hCheck").checked) {drawAcceleration(projectile, cords,k,1, "red", "m/s")}
+  if (getElementById("hCheck").checked) {drawAcceleration(projectile, cords,k,1, "green", "m/s")}
 
 
 

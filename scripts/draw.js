@@ -4,7 +4,8 @@ import {g, canvasWidth, canvasHeight, truncate} from "./constants.js"
 
 
 
-function drawText(text, x, y, k) {
+function drawText(text, x, y, k, color) {
+  ctx.fillStyle = color
 
   
 
@@ -45,9 +46,9 @@ function drawAcceleration(projectile, cords,k,a, color, txt) {
   ctx.moveTo(0, 0);
   ctx.lineTo(0, ((Yline)))
 
-  drawText(truncate(y)+ txt, -50, Yline, k) 
+  drawText(truncate(y)+ txt, -50, Yline, k, color) 
 
-  drawText(truncate(x)+ txt,Xline, 0, k) 
+  drawText(truncate(x)+ txt,Xline, 0, k, color) 
 
   ctx.translate(-(cords.x), -(cords.y));
 
