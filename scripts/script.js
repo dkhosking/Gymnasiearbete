@@ -1,11 +1,12 @@
-import { drawProjectile, drawAcceleration, drawArc, drawText} from "./draw.js";
+import { drawProjectile, drawAcceleration, drawArc, drawText, canon} from "./draw.js";
 import { projectileMaker } from "./projectileMaker.js";
+import { cordSet } from "./cordSet.js";
+import { inputs } from "./inputs.js";
 import {getElementById, g, ctx, startButton, pauseButton, homeButton, halfSpeed,canvasWidth,canvasHeight, dec, setG, truncate} from "./constants.js"
 
  
 
 let run = true
-
 
 // Calculate the device pixel ratio using the width and height of the canvas.
 const devicePixelRatio = (canvasWidth / canvasHeight);
@@ -25,35 +26,30 @@ console.log(projectile)
 let k = projectile.home()
 
 let timestep =1
-
 getElementById("angleInput").value = 45 
-getElementById("VoInput").value = 10 
+getElementById("voInput").value = 10 
 
 
+let inputValues = new inputs()
 
-// Initialize the projectile's position and time
-function cordSet() {
-  this.t=0;
-  this.x=0;
-  this.y=0;
-}
 let cords = new cordSet()
 
 function reset() {
   // Reset the simulation state
   cords = new cordSet()
-  console.log(getElementById("gravInput").value)
+  inputValues = new inputs()
+
   setG(getElementById("gravInput").value)
 
 
-  let angleInput= parseInt(getElementById("angleInput").value)
-  let VoInput = parseInt(getElementById("VoInput").value)
 
-  angleInput = angleInput  * (Math.PI / 180)
+  let VoInput = inputValues.voInput
+
+  angle = inputValues.angleInput  
 
 
   
-  if  (!(((Math.sin(angleInput) >= 0) && (Math.cos(angleInput) > 0))) || (Math.sin(angleInput) === 1)) {
+  if  (!(((Math.sin(angle) >= 0) && (Math.cos(angle) > 0))) || (Math.sin(angle) === 1)) {
     projectile = null
     
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -67,7 +63,7 @@ function reset() {
   if (VoInput > 0) {Vo = VoInput} 
 
 
-  projectile = new projectileMaker(Vo, angleInput)
+  projectile = new projectileMaker(Vo, angle)
 
   k = projectile.home()
   
@@ -80,13 +76,19 @@ getElementById("cordinates").innerHTML =`(X:${cords.x} Y: ${cords.y}m)`
 // Draw the projectile
 
 
+canon()
+
 // Update the projectile's position
 function update() {
+  
+
+
 
 
   homeButton.addEventListener("click", function() {
   k = projectile.home()
 });
+
 
 
   halfSpeed.addEventListener("click", function() {
@@ -154,6 +156,7 @@ function update() {
 
   drawText(YmaxText, 65, projectile.yMax*k, k)
 
+
 let gAxis = new projectileMaker(0, 0)
 gAxis.cVy = -g
 
@@ -198,9 +201,6 @@ pauseButton.addEventListener("click", function() {
   }
   run = false
 });
-
-
-
 
 
 

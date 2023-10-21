@@ -1,7 +1,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 import {g, canvasWidth, canvasHeight, truncate} from "./constants.js"
-
+import { inputs } from "./inputs.js";
 
 
 function drawText(text, x, y, k, color) {
@@ -53,11 +53,31 @@ function drawAcceleration(projectile, cords,k,a, color, txt) {
   ctx.translate(-(cords.x), -(cords.y));
 
   ctx.stroke();
-  ctx.closePath();
+
+}
+
+function canon() {
+
+  let inputValues = new inputs()
+  let angle = inputValues.angleInput
+
+  let Vo = inputValues.voInput /5
+
+
+  ctx.clearRect(0, 0, canvasWidth,  canvasHeight);
+
+  ctx.beginPath();
+
+  ctx.moveTo(0, 0);
+  ctx.lineTo(Math.cos(angle) * Vo*200, Math.sin(angle)*200 * Vo);
+  ctx.stroke();
+
+  requestAnimationFrame(canon);
+
 }
 
 function drawArc(projectile, k) {
-  ctx.beginPath();
+
 
   ctx.moveTo(0, projectile.yMax*k);
   ctx.lineTo(canvasWidth, projectile.yMax*k)
@@ -85,4 +105,4 @@ function drawArc(projectile, k) {
   
 
 
-export  { drawProjectile, drawAcceleration, drawArc, drawText}
+export  { drawProjectile, drawAcceleration, drawArc, drawText, canon}
